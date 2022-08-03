@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neos-Eye-Face-API", "Interface\Neos-Eye-Face-API.csproj", "{0322B2EF-7452-479D-BAE2-FCAB75033337}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectBabbleNeos", "Interface\ProjectBabbleNeos.csproj", "{0322B2EF-7452-479D-BAE2-FCAB75033337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

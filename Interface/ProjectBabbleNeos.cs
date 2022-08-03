@@ -16,6 +16,10 @@ namespace ProjectBabbleNeos
 		private static BabbleOSC _bosc;
 		private static ModConfiguration _config;
 
+		[AutoRegisterConfigKey]
+		private static ModConfigurationKey<bool> vrOnly = 
+			new ModConfigurationKey<bool>("vrOnly", "Only run face tracking in VR Mode", () => true);
+
 		public override void OnEngineInit()
 		{
 			// Harmony.DEBUG = true;
@@ -32,7 +36,7 @@ namespace ProjectBabbleNeos
 			{
 				try
 				{
-					BabbleOSC ETVR = new BabbleOSC();
+					_bosc = new BabbleOSC();
 					ProjectBabbleDevice gen = new ProjectBabbleDevice();
                     __instance.RegisterInputDriver(gen);
 				}
@@ -65,8 +69,8 @@ namespace ProjectBabbleNeos
 
 			public void UpdateInputs(float deltaTime)
 			{
-				_mouth.IsDeviceActive = true;
-				_mouth.IsTracking = true;
+				_mouth.IsDeviceActive = _config.GetValue(vrOnly);
+				_mouth.IsTracking = _config.GetValue(vrOnly);
 
 				// Assuming x is left/right, y is up/down, z is forward/backwards
 				_mouth.Jaw = new float3(
@@ -88,7 +92,7 @@ namespace ProjectBabbleNeos
 				_mouth.LipTopOverturn = 0f;
 
 				// Assuming a tug face like this? => 0_0
-				_mouth.LipLowerHorizontal = BabbleOSC.MouthShapes["mouthDimple_L"] - BabbleOSC.MouthShapes["mouthDimple_R"];
+				_mouth.LipLowerHorizontal = BabbleOSC.MouthShapes["mouthStretch_L"] - BabbleOSC.MouthShapes["mouthStretch_R"];
 				_mouth.LipUpperHorizontal = BabbleOSC.MouthShapes["mouthDimple_L"] - BabbleOSC.MouthShapes["mouthDimple_R"];
 
 				_mouth.LipLowerLeftRaise = BabbleOSC.MouthShapes["mouthLowerDown_L"];
