@@ -1,6 +1,6 @@
-﻿using BaseX;
-using Rug.Osc;
+﻿using Rug.Osc;
 using System;
+using System.Net;
 using System.Threading;
 using System.Collections.Generic;
 
@@ -17,11 +17,13 @@ namespace ProjectBabbleNeos
         {
             if (_receiver != null)
             {
-                UniLog.Error("BabbleOSC connection already exists.");
+                Console.WriteLine("BabbleOSC connection already exists.");
                 return;
             }
 
-            _receiver = new OscReceiver(DEFAULT_PORT);
+            IPAddress canidate;
+            IPAddress.TryParse("127.0.0.1", out canidate);
+            _receiver = new OscReceiver(canidate, DEFAULT_PORT);
             ConstructorHelper();
         }
 
@@ -29,20 +31,21 @@ namespace ProjectBabbleNeos
         {
             if (_receiver != null)
             {
-                UniLog.Error("BabbleOSC connection already exists.");
+                Console.WriteLine("BabbleOSC connection already exists.");
                 return;
             }
 
-            _receiver = new OscReceiver(port);
+            IPAddress canidate;
+            IPAddress.TryParse("127.0.0.1", out canidate);
+            _receiver = new OscReceiver(canidate, port);
             ConstructorHelper();
         }
 
         private void ConstructorHelper()
         {
-            // I want to use an enum, but we need to deal with strings
             foreach (var shape in MouthShape)
             {
-                MouthShapes.Add(shape, 0f);
+                MouthShapes.Add("/" + shape, 0f);
             }
             _thread = new Thread(new ThreadStart(ListenLoop));
             _receiver.Connect();
@@ -61,18 +64,19 @@ namespace ProjectBabbleNeos
                         packet = _receiver.Receive();
                         if (OscMessage.TryParse(packet.ToString(), out message)) {
                             if (MouthShapes.ContainsKey(message.Address)) {
+                                Console.WriteLine($"Key recognized {message.Address}");
                                 if (float.TryParse(message[0].ToString(), out candidate)) {
                                     MouthShapes[message.Address] = candidate;
+                                    Console.WriteLine($"{message.Address}: {candidate}");
                                 }
                             }
                         }
                     }
-                    Thread.Sleep(10);
                 }
                 catch (Exception e)
                 {
                     if (_receiver.State == OscSocketState.Connected)
-                        UniLog.Error(e.Message);
+                        Console.WriteLine(e.Message);
                 }
             }
         }
