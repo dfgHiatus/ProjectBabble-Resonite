@@ -57,7 +57,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjectBabbleNeos.cs" />
+    <Compile Include="BabbleExpressions.cs" />
+    <Compile Include="BabbleNeos.cs" />
     <Compile Include="BabbleOSC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
