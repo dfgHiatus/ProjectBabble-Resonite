@@ -73,16 +73,16 @@ namespace ProjectBabbleNeos
 				_mouth.LipTopOverturn = 0f;
 
 				// Assuming a tug face like this? => 0_0
-				_mouth.LipLowerHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthStretch_L"] - BabbleOSC.MouthShapesWithAddress["/mouthStretch_R"];
-				_mouth.LipUpperHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthDimple_L"] - BabbleOSC.MouthShapesWithAddress["/mouthDimple_R"];
+				_mouth.LipLowerHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthStretchLeft"] - BabbleOSC.MouthShapesWithAddress["/mouthStretchRight"];
+				_mouth.LipUpperHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthDimpleLeft"] - BabbleOSC.MouthShapesWithAddress["/mouthDimpleRight"];
 
-				_mouth.LipLowerLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDown_L"];
-				_mouth.LipLowerRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDown_R"];
-				_mouth.LipUpperRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUp_R"];
-				_mouth.LipUpperLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUp_L"];
+				_mouth.LipLowerLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDownLeft"];
+				_mouth.LipLowerRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDownRight"];
+				_mouth.LipUpperRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUpRight"];
+				_mouth.LipUpperLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUpLeft"];
 
-				_mouth.MouthRightSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmile_L"] - BabbleOSC.MouthShapesWithAddress["/mouthFrown_L"];
-				_mouth.MouthLeftSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmile_R"] - BabbleOSC.MouthShapesWithAddress["/mouthFrown_R"];
+				_mouth.MouthRightSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmileLeft"] - BabbleOSC.MouthShapesWithAddress["/mouthFrownLeft"];
+				_mouth.MouthLeftSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmileRight"] - BabbleOSC.MouthShapesWithAddress["/mouthFrownRight"];
 				_mouth.CheekLeftPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuff"];
 				_mouth.CheekRightPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuff"];
 			}
