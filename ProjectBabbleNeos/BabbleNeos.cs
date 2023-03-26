@@ -14,6 +14,10 @@ namespace ProjectBabbleNeos
 
 		private static BabbleOSC _bosc;
 		private static ModConfiguration _config;
+		
+		[AutoRegisterConfigKey]
+		private static ModConfigurationKey<bool> enableMod = 
+			new ModConfigurationKey<bool>("enableMod", "Enable mod", () => true);
 
 		[AutoRegisterConfigKey]
 		private static ModConfigurationKey<bool> vrOnly = 
@@ -23,6 +27,9 @@ namespace ProjectBabbleNeos
 		{
 			new Harmony("net.dfgHiatus.ProjectBabble-Neos").PatchAll();
 			_config = GetConfiguration();
+			if (!_config.GetValue(enableMod)) {
+				return;
+			}
 
 			_bosc = new BabbleOSC();
 			Engine.Current.OnReady += () =>
@@ -55,7 +62,7 @@ namespace ProjectBabbleNeos
 
 				// Assuming x is left/right, y is up/down, z is forward/backwards
 				_mouth.Jaw = new float3(
-					BabbleOSC.MouthShapesWithAddress["/jawLeft"] - BabbleOSC.MouthShapesWithAddress["/jawRight"],
+					BabbleOSC.MouthShapesWithAddress["/jawRight"] - BabbleOSC.MouthShapesWithAddress["/jawLeft"],
 					BabbleOSC.MouthShapesWithAddress["/jawOpen"], // + BabbleOSC.MouthShapesWithAddress["/mouthClose"] * -1,
 					BabbleOSC.MouthShapesWithAddress["/jawForward"]);
 				_mouth.Tongue = new float3(
@@ -64,12 +71,12 @@ namespace ProjectBabbleNeos
 					BabbleOSC.MouthShapesWithAddress["/tongueOut"]);
 
 				_mouth.JawOpen = BabbleOSC.MouthShapesWithAddress["/jawOpen"];
-				_mouth.MouthPout = BabbleOSC.MouthShapesWithAddress["/mouthPucker"] - BabbleOSC.MouthShapesWithAddress["/mouthFunnel"];
+				_mouth.MouthPout = BabbleOSC.MouthShapesWithAddress["/mouthFunnel"] - BabbleOSC.MouthShapesWithAddress["/mouthPucker"];
 				_mouth.TongueRoll = 0f;
 
-				_mouth.LipBottomOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollLower"] * -1;
+				_mouth.LipBottomOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollLower"] * 1;
 				_mouth.LipBottomOverturn = 0f;
-				_mouth.LipTopOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollUpper"] * -1;
+				_mouth.LipTopOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollUpper"] * 1;
 				_mouth.LipTopOverturn = 0f;
 
 				// Assuming a tug face like this? => 0_0
@@ -86,7 +93,6 @@ namespace ProjectBabbleNeos
 				_mouth.CheekLeftPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuff"];
 				_mouth.CheekRightPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuff"];
 			}
-
 		}
 	}
 }
