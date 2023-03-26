@@ -1,14 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Rug.Osc" Version="1.2.5" />
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Osc, Version=1.2.5.17694, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(NeosPath)Rug.Osc.dll</HintPath>
+    </Reference>
   </ItemGroup>
-
 </Project>
