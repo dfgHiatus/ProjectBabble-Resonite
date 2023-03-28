@@ -71,12 +71,12 @@ namespace ProjectBabbleNeos
 					BabbleOSC.MouthShapesWithAddress["/tongueOut"]);
 
 				_mouth.JawOpen = BabbleOSC.MouthShapesWithAddress["/jawOpen"];
-				_mouth.MouthPout = BabbleOSC.MouthShapesWithAddress["/mouthFunnel"] - BabbleOSC.MouthShapesWithAddress["/mouthPucker"];
+				_mouth.MouthPout = BabbleOSC.MouthShapesWithAddress["/mouthPucker"] - BabbleOSC.MouthShapesWithAddress["/mouthFunnel"];
 				_mouth.TongueRoll = 0f;
 
-				_mouth.LipBottomOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollLower"] * 1;
+				_mouth.LipBottomOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollLower"] * -1;
 				_mouth.LipBottomOverturn = 0f;
-				_mouth.LipTopOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollUpper"] * 1;
+				_mouth.LipTopOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollUpper"] * -1;
 				_mouth.LipTopOverturn = 0f;
 
 				// Assuming a tug face like this? => 0_0
