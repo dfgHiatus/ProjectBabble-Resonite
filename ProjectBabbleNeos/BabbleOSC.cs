@@ -44,7 +44,7 @@ namespace ProjectBabbleNeos
             OscMessage message;
             float candidate = 0;
 
-            while (_receiver.State != OscSocketState.Closed) {
+            while (true) {
                 try {
                     if (_receiver.State == OscSocketState.Connected) {
                         packet = _receiver.Receive();
