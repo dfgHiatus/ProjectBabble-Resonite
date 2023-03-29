@@ -1,29 +1,32 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net462</TargetFramework>
     <LangVersion>9</LangVersion>
     <BaseOutputPath>..\bin</BaseOutputPath>
     <BuildProjectReferences>false</BuildProjectReferences>
     <Deterministic>true</Deterministic>
     <CopyLocal>false</CopyLocal>
     <CopyToMods Condition="'$(CopyToMods)'==''">true</CopyToMods>
-    <NeosPath>$(MSBuildThisFileDirectory)NeosVR</NeosPath>
-    <NeosPath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\NeosVR\')">C:\Program Files (x86)\Steam\steamapps\common\NeosVR\</NeosPath>
-    <NeosPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/NeosVR/')">$(HOME)/.steam/steam/steamapps/common/NeosVR/</NeosPath>
-    <NeosPath Condition="Exists('/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/')">/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/</NeosPath>
-    <GameRefsPath>$(NeosPath)Neos_Data\Managed\</GameRefsPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugSymbols Condition="'$(Configuration)'=='Release'">false</DebugSymbols>
     <DebugType Condition="'$(Configuration)'=='Release'">None</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(NeosPath)'==''">
+    <NeosPath>$(MSBuildThisFileDirectory)NeosVR/</NeosPath>
+    <NeosPath Condition="Exists('/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/')">/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/</NeosPath>
+    <NeosPath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\NeosVR\')">C:\Program Files (x86)\Steam\steamapps\common\NeosVR\</NeosPath>
+    <NeosPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/NeosVR/')">$(HOME)/.steam/steam/steamapps/common/NeosVR/</NeosPath>
+    <GameRefsPath>$(NeosPath)Neos_Data\Managed\</GameRefsPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-    <Reference Include="NeosModLoader">
-      <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
-      <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
-      <HintPath Condition="Exists('$(MSBuildProjectDirectory)\..\NeosModLoader.dll')">$(MSBuildProjectDirectory)\..\NeosModLoader.dll</HintPath>
+    <Reference Include="FrooxEngine">
+      <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
     </Reference>
     <Reference Include="BaseX">
       <HintPath>$(GameRefsPath)BaseX.dll</HintPath>
@@ -35,17 +38,18 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(GameRefsPath)Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="FrooxEngine">
-      <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(GameRefsPath)UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="NeosModLoader">
+      <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProjectDirectory)\..\NeosModLoader.dll')">$(MSBuildProjectDirectory)\..\NeosModLoader.dll</HintPath>
+    </Reference>
   </ItemGroup>
-
 
   <!-- make all references non-private, so they won't be copied to the output folder -->
   <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
