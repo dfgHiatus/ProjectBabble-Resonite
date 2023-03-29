@@ -23,13 +23,13 @@ jobs:
       - name: build
         run: dotnet build ./ProjectBabble-Neos.csproj --configuration Release "-property:CopyToMods=false"
       - name: upload workflow artifacts
-        uses: actions/upload-artifact@v3
         with:
           name: ProjectBabbleNeos
           path: |
             ./ProjectBabbleNeos/bin/Release/net462/Rug.Osc.dll
             ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
           if-no-files-found: error
+          retention-days: 5
       - name: upload release artifacts
         if: startsWith(github.ref, 'refs/tags/') # only publish release artifacts for pushes to tags
         uses: softprops/action-gh-release@v1
