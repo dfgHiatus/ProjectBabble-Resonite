@@ -12,6 +12,11 @@ jobs:
         uses: actions/checkout@v3
       - name: setup build environment
         uses: neos-modding-group/neos-plugin-setup-action@master
+      - name: get NeosModLoader.dll
+        uses: dsaltares/fetch-gh-release-asset@1.0.0
+        with:
+          repo: neos-modding-group/NeosModLoader
+          file: NeosModLoader.dll
       - name: lint
         run: dotnet format --verbosity detailed --verify-no-changes ./ProjectBabble-Neos.csproj
       - name: build
