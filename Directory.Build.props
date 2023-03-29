@@ -51,13 +51,6 @@
     </Reference>
   </ItemGroup>
 
-  <!-- make all references non-private, so they won't be copied to the output folder -->
-  <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
-    <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
-    </ItemGroup>
-  </Target>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NeosPath)nml_mods" />
     <Message Text="Copied $(TargetFileName) to $(NeosPath)nml_mods" Importance="high" />

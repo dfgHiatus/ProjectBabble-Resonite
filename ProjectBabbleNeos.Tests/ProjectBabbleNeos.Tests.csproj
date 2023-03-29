@@ -1,10 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Reference Include="Unity.InputSystem">
-      <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Rug.Osc, Version=1.2.5.17694, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(NeosPath)Rug.Osc.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Rug.Osc" Version="1.2.5" />
   </ItemGroup>
 </Project>
