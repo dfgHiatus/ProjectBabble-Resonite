@@ -26,13 +26,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ProjectBabbleNeos
-          path: ./ProjectBabble-Neos/ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
+          path: ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
           if-no-files-found: error
       - name: upload release artifacts
         if: startsWith(github.ref, 'refs/tags/') # only publish release artifacts for pushes to tags
         uses: softprops/action-gh-release@v1
         with:
           draft: true # if creating a new release, make it a draft
-          files: ./ProjectBabbleNeos/ProjectBabbleNeos/bin/Release/ProjectBabbleNeos.dll
+          files: ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
           fail_on_unmatched_files: true
 
