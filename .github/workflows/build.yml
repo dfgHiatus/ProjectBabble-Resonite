@@ -23,6 +23,7 @@ jobs:
       - name: build
         run: dotnet build ./ProjectBabble-Neos.csproj --configuration Release "-property:CopyToMods=false"
       - name: upload workflow artifacts
+        uses: actions/upload-artifact@v3
         with:
           name: ProjectBabbleNeos
           path: |
