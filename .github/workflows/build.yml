@@ -3,7 +3,8 @@ on: [push, pull_request]
 
 env:
   NeosPath: "${{ github.workspace }}/neos_install/"
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
