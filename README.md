@@ -9,7 +9,7 @@ A [NeosModLoader](https://github.com/zkxs/NeosModLoader) mod for [Neos VR](https
 1. Load and run Project Babble's face tracking before starting Neos. All defaults should be fine unless you have more than 1 camera.
 1. Start the game!
 
-Mod has controls to enable/disable it completely (no hooks on avatar values) or to disable it just for VR in mod settings.
+Mod has controls to enable/disable it completely (no hooks on avatar values) or to enable/disable it just for VR in mod settings.
 
 If you want to verify that the mod is working you can check your Neos logs, or create an EmptyObject with an AvatarRawMouthData Component (Found under Users -> Common Avatar System -> Face -> AvatarRawEyeData/AvatarRawMouthData).
 
