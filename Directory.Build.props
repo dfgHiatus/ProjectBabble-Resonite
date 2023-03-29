@@ -19,13 +19,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <Reference Include="NeosModLoader">
       <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
       <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="HarmonyLib">
-      <HintPath>$(NeosPath)nml_libs\0Harmony.dll</HintPath>
-      <HintPath Condition="Exists('$(NeosPath)0Harmony.dll')">$(NeosPath)0Harmony.dll</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProjectDirectory)\..\NeosModLoader.dll')">$(MSBuildProjectDirectory)\..\NeosModLoader.dll</HintPath>
     </Reference>
     <Reference Include="BaseX">
       <HintPath>$(GameRefsPath)BaseX.dll</HintPath>
