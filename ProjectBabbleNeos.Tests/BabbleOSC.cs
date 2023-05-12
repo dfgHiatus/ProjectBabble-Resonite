@@ -58,14 +58,20 @@ namespace ProjectBabbleNeos
             OscMessage message;
             float candidate = 0;
 
-            while (_receiver.State != OscSocketState.Closed) {
-                try {
-                    if (_receiver.State == OscSocketState.Connected) {
+            while (_receiver.State != OscSocketState.Closed)
+            {
+                try
+                {
+                    if (_receiver.State == OscSocketState.Connected)
+                    {
                         packet = _receiver.Receive();
-                        if (OscMessage.TryParse(packet.ToString(), out message)) {
-                            if (MouthShapes.ContainsKey(message.Address)) {
+                        if (OscMessage.TryParse(packet.ToString(), out message))
+                        {
+                            if (MouthShapes.ContainsKey(message.Address))
+                            {
                                 Console.WriteLine($"Key recognized {message.Address}");
-                                if (float.TryParse(message[0].ToString(), out candidate)) {
+                                if (float.TryParse(message[0].ToString(), out candidate))
+                                {
                                     MouthShapes[message.Address] = candidate;
                                     Console.WriteLine($"{message.Address}: {candidate}");
                                 }
