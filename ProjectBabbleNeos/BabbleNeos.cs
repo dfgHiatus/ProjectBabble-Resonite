@@ -25,7 +25,7 @@ namespace ProjectBabbleNeos
         private static ModConfigurationKey<bool> ModEnabled = new ModConfigurationKey<bool>("enabled", "Mod Enabled", () => true);
 
         [AutoRegisterConfigKey]
-        private static ModConfigurationKey<int> OscPort = new ModConfigurationKey<int>("osc_port", "Babble OSC port", () => 9000);
+        private static ModConfigurationKey<int> OscPort = new ModConfigurationKey<int>("osc_port", "Babble OSC port", () => 9002);
 
         [HarmonyPatch(typeof(InputInterface), MethodType.Constructor)]
         [HarmonyPatch(new[] { typeof(Engine) })]
