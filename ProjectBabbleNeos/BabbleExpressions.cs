@@ -4,11 +4,17 @@
     {
         public static string[] MouthShapesWithAddress = new string[]
         {
-            "/cheekPuff",
-            "/cheekSquintLeft",
-            "/cheekSquintRight",
-            "/noseSneerLeft",
-            "/noseSneerRight",
+
+            "/tongueOut",
+            "/tongueUp",
+            "/tongueDown",
+            "/tongueLeft",
+            "/tongueRight",
+            "/tongueRoll",
+            "/cheekPuffLeft",
+            "/cheekPuffRight",
+            "/cheekSuckLeft",
+            "/cheekSuckRight",
             "/jawOpen",
             "/jawForward",
             "/jawLeft",
@@ -35,8 +41,7 @@
             "/mouthPressLeft",
             "/mouthPressRight",
             "/mouthStretchLeft",
-            "/mouthStretchRight",
-            "/tongueOut",
+            "/mouthStretchRight"
         };
     }
 }
