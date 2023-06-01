@@ -1,3 +1,0 @@
-﻿using ProjectBabbleNeos;
-
-new BabbleOSC();

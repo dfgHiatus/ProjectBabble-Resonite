@@ -1,0 +1,43 @@
+name: Autobuild
+on: [push, pull_request]
+
+env:
+  NeosPath: "${{ github.workspace }}/neos_install/"
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout NML
+        uses: actions/checkout@v3
+      - name: setup build environment
+        uses: neos-modding-group/neos-plugin-setup-action@master
+      - name: get NeosModLoader.dll
+        uses: dsaltares/fetch-gh-release-asset@1.0.0
+        with:
+          repo: neos-modding-group/NeosModLoader
+          file: NeosModLoader.dll
+      - name: lint
+        run: dotnet format --verbosity detailed --verify-no-changes ./ProjectBabble-Neos.csproj
+      - name: build
+        run: dotnet build ./ProjectBabble-Neos.csproj --configuration Release "-property:CopyToMods=false"
+      - name: upload workflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ProjectBabbleNeos
+          path: |
+            ./ProjectBabbleNeos/bin/Release/net462/Rug.Osc.dll
+            ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
+          if-no-files-found: error
+          retention-days: 5
+      - name: upload release artifacts
+        if: startsWith(github.ref, 'refs/tags/') # only publish release artifacts for pushes to tags
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true # if creating a new release, make it a draft
+          files: |
+            ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
+            ./ProjectBabbleNeos/bin/Release/net462/Rug.Osc.dll
+          fail_on_unmatched_files: true
+

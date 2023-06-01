@@ -1,0 +1,55 @@
+<Project>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFramework>net462</TargetFramework>
+    <FileAlignment>512</FileAlignment>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <CopyLocal>false</CopyLocal>
+    <CopyToMods Condition="'$(CopyToMods)'==''">true</CopyToMods>
+    <DebugSymbols Condition="'$(Configuration)'=='Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)'=='Release'">None</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(NeosPath)'==''">
+    <NeosPath>$(MSBuildThisFileDirectory)NeosVR/</NeosPath>
+    <NeosPath Condition="Exists('/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/')">/home/plyshka/Games/SteamLibrary/steamapps/common/NeosVR/</NeosPath>
+    <NeosPath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\NeosVR\')">C:\Program Files (x86)\Steam\steamapps\common\NeosVR\</NeosPath>
+    <NeosPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/NeosVR/')">$(HOME)/.steam/steam/steamapps/common/NeosVR/</NeosPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <Reference Include="FrooxEngine">
+      <HintPath>$(NeosPath)Neos_Data\Managed\FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="BaseX">
+      <HintPath>$(NeosPath)Neos_Data\Managed\BaseX.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeX">
+      <HintPath>$(NeosPath)Neos_Data\Managed\CodeX.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(NeosPath)Neos_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(NeosPath)Neos_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(NeosPath)Neos_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="NeosModLoader">
+      <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProjectDirectory)\..\NeosModLoader.dll')">$(MSBuildProjectDirectory)\..\NeosModLoader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NeosPath)nml_mods" />
+    <Message Text="Copied $(TargetFileName) to $(NeosPath)nml_mods" Importance="high" />
+  </Target>
+</Project>
