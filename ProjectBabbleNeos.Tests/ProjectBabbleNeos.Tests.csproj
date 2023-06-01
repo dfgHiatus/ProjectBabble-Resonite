@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Rug.Osc" Version="1.2.5" />
-  </ItemGroup>
-</Project>
