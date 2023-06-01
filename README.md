@@ -14,4 +14,4 @@ Mod has controls to enable/disable it completely (no hooks on avatar values) or 
 If you want to verify that the mod is working you can check your Neos logs, or create an EmptyObject with an AvatarRawMouthData Component (Found under Users -> Common Avatar System -> Face -> AvatarRawEyeData/AvatarRawMouthData).
 
 # Libraries used:
-- [Rug-OSC](https://bitbucket.org/rugcode/rug.osc/) - MIT License
+- [OSCCore](https://github.com/tilde-love/osc-core) - MIT License
