@@ -15,8 +15,8 @@ namespace ProjectBabbleNeos
         public override void OnEngineInit()
         {
             Config = GetConfiguration();
-            new Harmony("net.dfgHiatus.plyshka.ProjectBabble-Neos").PatchAll();
             Engine.Current.OnShutdown += () => BOSC.Teardown();
+            new Harmony("net.dfgHiatus.plyshka.ProjectBabble-Neos").PatchAll();
         }
         private static BabbleOSC BOSC;
         private static ModConfiguration Config;

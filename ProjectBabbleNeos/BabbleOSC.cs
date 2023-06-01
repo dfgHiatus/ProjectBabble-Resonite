@@ -31,7 +31,7 @@ namespace ProjectBabbleNeos
             if (port.HasValue)
                 _receiver = new UdpClient(new IPEndPoint(candidate, port.Value));
             else
-                _receiver = new UdpClient(new IPEndPoint(candidate,DEFAULT_PORT));
+                _receiver = new UdpClient(new IPEndPoint(candidate, DEFAULT_PORT));
 
             foreach (var shape in BabbleExpressions.MouthShapesWithAddress)
                 MouthShapesWithAddress.Add(shape, 0f);
@@ -42,7 +42,7 @@ namespace ProjectBabbleNeos
 
         private static async void ListenLoop()
         {
-            UniLog.Warning("Started Babble loop");
+            UniLog.Log("Started Babble loop");
             while (OscSocketState)
             {
                 var result = await _receiver.ReceiveAsync();
@@ -60,9 +60,11 @@ namespace ProjectBabbleNeos
 
         public void Teardown()
         {
+            UniLog.Log("Babble teardown called");
             OscSocketState = false;
             _receiver.Close();
             _task.Wait();
+            UniLog.Log("Babble teardown completed");
         }
     }
 }
