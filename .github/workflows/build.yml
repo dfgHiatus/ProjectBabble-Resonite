@@ -27,7 +27,7 @@ jobs:
         with:
           name: ProjectBabbleNeos
           path: |
-            ./ProjectBabbleNeos/bin/Release/net462/Rug.Osc.dll
+            ./ProjectBabbleNeos/bin/Release/net462/OscCore.dll
             ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
           if-no-files-found: error
           retention-days: 5
@@ -38,6 +38,6 @@ jobs:
           draft: true # if creating a new release, make it a draft
           files: |
             ./ProjectBabbleNeos/bin/Release/net462/ProjectBabbleNeos.dll
-            ./ProjectBabbleNeos/bin/Release/net462/Rug.Osc.dll
+            ./ProjectBabbleNeos/bin/Release/net462/OscCore.dll
           fail_on_unmatched_files: true
 
