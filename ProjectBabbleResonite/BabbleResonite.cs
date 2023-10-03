@@ -1,22 +1,21 @@
 ﻿using System;
-using BaseX;
+using Elements.Core;
 using FrooxEngine;
 using HarmonyLib;
-using NeosModLoader;
+using ResoniteModLoader;
 
-namespace ProjectBabbleNeos
+namespace ProjectBabbleResonite
 {
-    public class BabbleNeos : NeosMod
+    public class BabbleResonite : ResoniteMod
     {
-        public override string Name => "ProjectBabble-Neos";
+        public override string Name => "ProjectBabble-Resonite";
         public override string Author => "dfgHiatus + PLYSHKA";
         public override string Version => "1.0.2";
-        public override string Link => "https://github.com/dfgHiatus/Neos-Eye-Face-API/";
         public override void OnEngineInit()
         {
             Config = GetConfiguration();
             Engine.Current.OnShutdown += () => BOSC.Teardown();
-            new Harmony("net.dfgHiatus.plyshka.ProjectBabble-Neos").PatchAll();
+            new Harmony("net.dfgHiatus.plyshka.ProjectBabble-Resonite").PatchAll();
         }
         private static BabbleOSC BOSC;
         private static ModConfiguration Config;

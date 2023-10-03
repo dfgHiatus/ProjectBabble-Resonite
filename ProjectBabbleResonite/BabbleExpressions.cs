@@ -1,4 +1,4 @@
-﻿namespace ProjectBabbleNeos
+﻿namespace ProjectBabbleResonite
 {
     public static class BabbleExpressions
     {

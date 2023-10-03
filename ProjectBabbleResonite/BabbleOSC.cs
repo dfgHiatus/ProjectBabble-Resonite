@@ -1,4 +1,4 @@
-﻿using BaseX;
+﻿using Elements.Core;
 using OscCore;
 using System;
 using System.Net;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 
-namespace ProjectBabbleNeos
+namespace ProjectBabbleResonite
 {
     public class BabbleOSC
     {

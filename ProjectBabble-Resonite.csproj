@@ -2,7 +2,7 @@
 
   <!-- Builds all other *.csproj files under this repository. -->
   <ItemGroup>
-    <ProjectFiles Include="**/*.csproj" Exclude="ProjectBabble-Neos.csproj" />
+    <ProjectFiles Include="**/*.csproj" Exclude="ProjectBabble-Resonite.csproj" />
   </ItemGroup>
 
   <Target Name="Build">
