@@ -12,7 +12,7 @@ namespace ProjectBabbleResonite
         public override string Author => "PLYSHKA + dfgHiatus";
         public override string Version => "2.0.0";
 
-        public override string Link => "https://github.com/plyshka/ProjectBabbleResonite";
+        public override string Link => "https://github.com/Meister1593/ProjectBabbleResonite";
 
         private static BabbleOsc _babbleOsc;
         private static ModConfiguration _config;
