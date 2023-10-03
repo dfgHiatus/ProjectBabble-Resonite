@@ -2,8 +2,7 @@
 {
     public static class BabbleExpressions
     {
-        public static string[] MouthShapesWithAddress = new string[]
-        {
+        public static readonly string[] MouthShapesWithAddress = {
 
             "/tongueOut",
             "/tongueUp",

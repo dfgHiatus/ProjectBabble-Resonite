@@ -8,48 +8,52 @@ namespace ProjectBabbleResonite
 {
     public class BabbleResonite : ResoniteMod
     {
-        public override string Name => "ProjectBabble-Resonite";
-        public override string Author => "dfgHiatus + PLYSHKA";
-        public override string Version => "1.0.2";
+        public override string Name => "ProjectBabbleResonite";
+        public override string Author => "PLYSHKA + dfgHiatus";
+        public override string Version => "2.0.0";
+
+        public override string Link => "https://github.com/plyshka/ProjectBabbleResonite";
+
+        private static BabbleOsc _babbleOsc;
+        private static ModConfiguration _config;
+
         public override void OnEngineInit()
         {
-            Config = GetConfiguration();
-            Engine.Current.OnShutdown += () => BOSC.Teardown();
-            new Harmony("net.dfgHiatus.plyshka.ProjectBabble-Resonite").PatchAll();
+            _config = GetConfiguration();
+            Engine.Current.OnShutdown += () => _babbleOsc.Teardown();
+            new Harmony("net.plyshka.ProjectBabbleResonite").PatchAll();
         }
-        private static BabbleOSC BOSC;
-        private static ModConfiguration Config;
 
         [AutoRegisterConfigKey]
-        private static ModConfigurationKey<bool> ModEnabled = new ModConfigurationKey<bool>("enabled", "Mod Enabled", () => true);
+        private static readonly ModConfigurationKey<bool> ModEnabled = new("enabled", "Mod Enabled", () => true);
 
         [AutoRegisterConfigKey]
-        private static ModConfigurationKey<int> OscPort = new ModConfigurationKey<int>("osc_port", "Babble OSC port", () => 8888);
+        private static readonly ModConfigurationKey<int> OscPort = new("osc_port", "Babble OSC port", () => 8888);
 
         [HarmonyPatch(typeof(InputInterface), MethodType.Constructor)]
         [HarmonyPatch(new[] { typeof(Engine) })]
         public class InputInterfaceCtorPatch
         {
-            public static void Postfix(InputInterface __instance)
+            public static void Postfix(InputInterface instance)
             {
                 try
                 {
-                    BOSC = new BabbleOSC(Config.GetValue(OscPort));
-                    ProjectBabbleInterface gen = new ProjectBabbleInterface();
-                    __instance.RegisterInputDriver(gen);
+                    _babbleOsc = new BabbleOsc(_config.GetValue(OscPort));
+                    var gen = new ProjectBabbleInterface();
+                    instance.RegisterInputDriver(gen);
                 }
                 catch (Exception e)
                 {
-                    Warn("Module failed to initiallize.");
+                    Warn("Module failed to initialize.");
                     Warn(e.ToString());
                 }
             }
         }
 
-        public class ProjectBabbleInterface : IInputDriver
+        private class ProjectBabbleInterface : IInputDriver
         {
             public int UpdateOrder => 100;
-            public Mouth _mouth;
+            private Mouth _mouth;
 
             public void CollectDeviceInfos(DataTreeList list)
             {
@@ -67,47 +71,52 @@ namespace ProjectBabbleResonite
 
             public void UpdateInputs(float deltaTime)
             {
-                if (!Config.GetValue(ModEnabled))
+                if (!_config.GetValue(ModEnabled))
                 {
                     _mouth.IsTracking = false;
                     return;
                 }
-                else
-                {
-                    _mouth.IsTracking = Engine.Current.InputInterface.VR_Active || Engine.Current.InputInterface.ScreenActive;
-                }
+
+                _mouth.IsTracking = true;
 
                 // Assuming x is left/right, y is up/down, z is forward/backwards
                 _mouth.Jaw = new float3(
-                    BabbleOSC.MouthShapesWithAddress["/jawRight"] - BabbleOSC.MouthShapesWithAddress["/jawLeft"],
-                    BabbleOSC.MouthShapesWithAddress["/mouthClose"] * -1,
-                    BabbleOSC.MouthShapesWithAddress["/jawForward"]);
+                    BabbleOsc.MouthShapesWithAddress["/jawRight"] - BabbleOsc.MouthShapesWithAddress["/jawLeft"],
+                    BabbleOsc.MouthShapesWithAddress["/mouthClose"] * -1,
+                    BabbleOsc.MouthShapesWithAddress["/jawForward"]);
                 _mouth.Tongue = new float3(
-                    BabbleOSC.MouthShapesWithAddress["/tongueRight"] - BabbleOSC.MouthShapesWithAddress["/tongueLeft"],
-                    BabbleOSC.MouthShapesWithAddress["/tongueUp"] - BabbleOSC.MouthShapesWithAddress["/tongueDown"],
-                    BabbleOSC.MouthShapesWithAddress["/tongueOut"]);
-                _mouth.JawOpen = BabbleOSC.MouthShapesWithAddress["/jawOpen"] - BabbleOSC.MouthShapesWithAddress["/mouthClose"];
-                _mouth.MouthPout = BabbleOSC.MouthShapesWithAddress["/mouthPucker"];
-                _mouth.TongueRoll = BabbleOSC.MouthShapesWithAddress["/tongueRoll"];
+                    BabbleOsc.MouthShapesWithAddress["/tongueRight"] - BabbleOsc.MouthShapesWithAddress["/tongueLeft"],
+                    BabbleOsc.MouthShapesWithAddress["/tongueUp"] - BabbleOsc.MouthShapesWithAddress["/tongueDown"],
+                    BabbleOsc.MouthShapesWithAddress["/tongueOut"]);
+                _mouth.JawOpen = BabbleOsc.MouthShapesWithAddress["/jawOpen"] -
+                                 BabbleOsc.MouthShapesWithAddress["/mouthClose"];
+                _mouth.MouthPout = BabbleOsc.MouthShapesWithAddress["/mouthPucker"];
+                _mouth.TongueRoll = BabbleOsc.MouthShapesWithAddress["/tongueRoll"];
 
-                _mouth.LipBottomOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollLower"] * -1;
+                _mouth.LipBottomOverUnder = BabbleOsc.MouthShapesWithAddress["/mouthRollLower"] * -1;
                 _mouth.LipBottomOverturn = 0f;
-                _mouth.LipTopOverUnder = BabbleOSC.MouthShapesWithAddress["/mouthRollUpper"] * -1;
+                _mouth.LipTopOverUnder = BabbleOsc.MouthShapesWithAddress["/mouthRollUpper"] * -1;
                 _mouth.LipTopOverturn = 0f;
 
                 // Assuming a tug face like this? => 0_0
-                _mouth.LipLowerHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthStretchRight"] - BabbleOSC.MouthShapesWithAddress["/mouthStretchLeft"];
-                _mouth.LipUpperHorizontal = BabbleOSC.MouthShapesWithAddress["/mouthDimpleRight"] - BabbleOSC.MouthShapesWithAddress["/mouthDimpleLeft"];
+                _mouth.LipLowerHorizontal = BabbleOsc.MouthShapesWithAddress["/mouthStretchRight"] -
+                                            BabbleOsc.MouthShapesWithAddress["/mouthStretchLeft"];
+                _mouth.LipUpperHorizontal = BabbleOsc.MouthShapesWithAddress["/mouthDimpleRight"] -
+                                            BabbleOsc.MouthShapesWithAddress["/mouthDimpleLeft"];
 
-                _mouth.LipLowerLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDownLeft"];
-                _mouth.LipLowerRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthLowerDownRight"];
-                _mouth.LipUpperRightRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUpRight"];
-                _mouth.LipUpperLeftRaise = BabbleOSC.MouthShapesWithAddress["/mouthUpperUpLeft"];
+                _mouth.LipLowerLeftRaise = BabbleOsc.MouthShapesWithAddress["/mouthLowerDownLeft"];
+                _mouth.LipLowerRightRaise = BabbleOsc.MouthShapesWithAddress["/mouthLowerDownRight"];
+                _mouth.LipUpperRightRaise = BabbleOsc.MouthShapesWithAddress["/mouthUpperUpRight"];
+                _mouth.LipUpperLeftRaise = BabbleOsc.MouthShapesWithAddress["/mouthUpperUpLeft"];
 
-                _mouth.MouthLeftSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmileLeft"] - BabbleOSC.MouthShapesWithAddress["/mouthFrownLeft"];
-                _mouth.MouthRightSmileFrown = BabbleOSC.MouthShapesWithAddress["/mouthSmileRight"] - BabbleOSC.MouthShapesWithAddress["/mouthFrownRight"];
-                _mouth.CheekLeftPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuffLeft"] - BabbleOSC.MouthShapesWithAddress["/cheekSuckLeft"];
-                _mouth.CheekRightPuffSuck = BabbleOSC.MouthShapesWithAddress["/cheekPuffRight"] - BabbleOSC.MouthShapesWithAddress["/cheekSuckRight"];
+                _mouth.MouthLeftSmileFrown = BabbleOsc.MouthShapesWithAddress["/mouthSmileLeft"] -
+                                             BabbleOsc.MouthShapesWithAddress["/mouthFrownLeft"];
+                _mouth.MouthRightSmileFrown = BabbleOsc.MouthShapesWithAddress["/mouthSmileRight"] -
+                                              BabbleOsc.MouthShapesWithAddress["/mouthFrownRight"];
+                _mouth.CheekLeftPuffSuck = BabbleOsc.MouthShapesWithAddress["/cheekPuffLeft"] -
+                                           BabbleOsc.MouthShapesWithAddress["/cheekSuckLeft"];
+                _mouth.CheekRightPuffSuck = BabbleOsc.MouthShapesWithAddress["/cheekPuffRight"] -
+                                            BabbleOsc.MouthShapesWithAddress["/cheekSuckRight"];
             }
         }
     }
