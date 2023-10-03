@@ -47,7 +47,7 @@
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ResonitePath)res_mods" />
-        <Message Text="Copied $(TargetFileName) to $(ResonitePath)res_mods" Importance="high" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ResonitePath)rml_mods" />
+        <Message Text="Copied $(TargetFileName) to $(ResonitePath)rml_mods" Importance="high" />
     </Target>
 </Project>
