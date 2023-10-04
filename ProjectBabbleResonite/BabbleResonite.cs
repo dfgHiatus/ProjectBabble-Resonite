@@ -34,13 +34,13 @@ namespace ProjectBabbleResonite
         [HarmonyPatch(new[] { typeof(Engine) })]
         public class InputInterfaceCtorPatch
         {
-            public static void Postfix(InputInterface instance)
+            public static void Postfix(InputInterface __instance)
             {
                 try
                 {
                     _babbleOsc = new BabbleOsc(_config.GetValue(OscPort));
                     var gen = new ProjectBabbleInterface();
-                    instance.RegisterInputDriver(gen);
+                    __instance.RegisterInputDriver(gen);
                 }
                 catch (Exception e)
                 {
