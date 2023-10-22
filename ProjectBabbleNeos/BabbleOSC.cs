@@ -1,20 +1,18 @@
-﻿using BaseX;
+﻿using Elements.Core;
 using OscCore;
-using System;
-using System.Net;
-using System.Threading;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace ProjectBabbleNeos
 {
     public class BabbleOSC
     {
-        public static bool OscSocketState;
-        public static Dictionary<string, float> MouthShapesWithAddress = new Dictionary<string, float>();
+        public readonly Dictionary<string, float> MouthShapesWithAddress = new Dictionary<string, float>();
         private static UdpClient? _receiver;
-        private static Task? _task;
+        private readonly Task? _task;
+        private bool OscSocketState;
         private const int DEFAULT_PORT = 8888;
 
         public BabbleOSC(int? port = null)
@@ -25,8 +23,7 @@ namespace ProjectBabbleNeos
                 return;
             }
 
-            IPAddress candidate;
-            IPAddress.TryParse("127.0.0.1", out candidate);
+            IPAddress.TryParse("127.0.0.1", out var candidate);
 
             if (port.HasValue)
                 _receiver = new UdpClient(new IPEndPoint(candidate, port.Value));
@@ -40,7 +37,7 @@ namespace ProjectBabbleNeos
             _task = Task.Run(() => ListenLoop());
         }
 
-        private static async void ListenLoop()
+        private async void ListenLoop()
         {
             UniLog.Log("Started Babble loop");
             while (OscSocketState)
@@ -60,11 +57,9 @@ namespace ProjectBabbleNeos
 
         public void Teardown()
         {
-            UniLog.Log("Babble teardown called");
             OscSocketState = false;
             _receiver.Close();
             _task.Wait();
-            UniLog.Log("Babble teardown completed");
         }
     }
 }
