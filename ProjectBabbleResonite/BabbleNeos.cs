@@ -11,7 +11,7 @@ namespace ProjectBabbleNeos
         public override string Name => "ProjectBabble-Neos";
         public override string Author => "dfgHiatus, PLYSHKA";
         public override string Version => "3.0.0";
-        public override string Link => "https://github.com/dfgHiatus/Neos-Eye-Face-API/";
+        public override string Link => "https://github.com/dfgHiatus/ProjectBabble-Resonite";
         public override void OnEngineInit()
         {
             Config = GetConfiguration();
