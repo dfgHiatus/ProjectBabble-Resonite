@@ -6,9 +6,9 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>9</LangVersion>
+        <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <Deterministic>true</Deterministic>
         <CopyLocal>false</CopyLocal>
@@ -26,24 +26,22 @@
 
     <ItemGroup>
         <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-        <Reference Include="FrooxEngine">
-            <HintPath>$(ResonitePath)Resonite_Data\Managed\FrooxEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="Elements.Core">
-            <HintPath>$(ResonitePath)Resonite_Data\Managed\Elements.Core.dll</HintPath>
-        </Reference>
-        <Reference Include="Elements.Assets">
-            <HintPath>$(ResonitePath)Resonite_Data\Managed\Elements.Assets.dll</HintPath>
-        </Reference>
-        <Reference Include="Assembly-CSharp">
-            <HintPath>$(ResonitePath)Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="ResoniteModLoader">
-            <HintPath>$(ResonitePath)Libraries\ResoniteModLoader.dll</HintPath>
-            <HintPath Condition="Exists('$(ResonitePath)ResoniteModLoader.dll')">$(ResonitePath)ResoniteModLoader.dll</HintPath>
-            <HintPath Condition="Exists('$(MSBuildProjectDirectory)\..\ResoniteModLoader.dll')">$(MSBuildProjectDirectory)\..\ResoniteModLoader.dll</HintPath>
-        </Reference>
         <PackageReference Include="OscCore" Version="1.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="0Harmony">
+        <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\rml_libs\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="Elements.Core">
+        <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Resonite_Data\Managed\Elements.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="FrooxEngine">
+        <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="ResoniteModLoader">
+        <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Libraries\ResoniteModLoader.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
