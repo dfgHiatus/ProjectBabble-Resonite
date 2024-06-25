@@ -101,21 +101,24 @@ public class BabbleResonite : ResoniteMod
 
             _mouth.IsTracking = true;
 
-            // Assuming x is left/right, y is up/down, z is forward/backwards
+            // x is left/right, y is up/down, z is forward/backwards
             _mouth.Jaw = new float3(
                 BabbleOsc.MouthShapesWithAddress["/jawRight"] - BabbleOsc.MouthShapesWithAddress["/jawLeft"],
                 BabbleOsc.MouthShapesWithAddress["/mouthClose"] * -1,
                 BabbleOsc.MouthShapesWithAddress["/jawForward"]);
+            _mouth.JawOpen = BabbleOsc.MouthShapesWithAddress["/jawOpen"] -
+                             BabbleOsc.MouthShapesWithAddress["/mouthClose"];
+
             _mouth.Tongue = new float3(
                 BabbleOsc.MouthShapesWithAddress["/tongueRight"] - BabbleOsc.MouthShapesWithAddress["/tongueLeft"],
                 BabbleOsc.MouthShapesWithAddress["/tongueUp"] - BabbleOsc.MouthShapesWithAddress["/tongueDown"],
                 BabbleOsc.MouthShapesWithAddress["/tongueOut"]);
-            _mouth.JawOpen = BabbleOsc.MouthShapesWithAddress["/jawOpen"] -
-                             BabbleOsc.MouthShapesWithAddress["/mouthClose"];
+            _mouth.TongueRoll = BabbleOsc.MouthShapesWithAddress["/tongueRoll"];
+
+
             var pucker = BabbleOsc.MouthShapesWithAddress["/mouthPucker"];
             _mouth.LipsLeftPress = pucker;
             _mouth.LipsRightPress = pucker;
-            _mouth.TongueRoll = BabbleOsc.MouthShapesWithAddress["/tongueRoll"];
 
             var rollLower = BabbleOsc.MouthShapesWithAddress["/mouthRollLower"] * -1;
             _mouth.LipBottomLeftOverUnder = rollLower;
