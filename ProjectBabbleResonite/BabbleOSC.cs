@@ -1,21 +1,21 @@
 ﻿using Elements.Core;
 using OscCore;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
-namespace ProjectBabbleNeos
+namespace ProjectBabbleResonite
 {
-    public class BabbleOSC
+    public class BabbleOsc
     {
-        public readonly Dictionary<string, float> MouthShapesWithAddress = new Dictionary<string, float>();
+        private static bool _oscSocketState;
+        public static readonly Dictionary<string, float> MouthShapesWithAddress = new();
         private static UdpClient? _receiver;
-        private readonly Task? _task;
-        private bool OscSocketState;
-        private const int DEFAULT_PORT = 8888;
+        private static Task? _task;
+        private const int DefaultPort = 8888;
 
-        public BabbleOSC(int? port = null)
+        public BabbleOsc(int? port = null)
         {
             if (_receiver != null)
             {
@@ -25,29 +25,29 @@ namespace ProjectBabbleNeos
 
             IPAddress.TryParse("127.0.0.1", out var candidate);
 
-            if (port.HasValue)
-                _receiver = new UdpClient(new IPEndPoint(candidate, port.Value));
-            else
-                _receiver = new UdpClient(new IPEndPoint(candidate, DEFAULT_PORT));
+            _receiver = port.HasValue
+                ? new UdpClient(new IPEndPoint(candidate, port.Value))
+                : new UdpClient(new IPEndPoint(candidate, DefaultPort));
 
             foreach (var shape in BabbleExpressions.MouthShapesWithAddress)
                 MouthShapesWithAddress.Add(shape, 0f);
 
-            OscSocketState = true;
-            _task = Task.Run(() => ListenLoop());
+            _oscSocketState = true;
+            _task = Task.Run(ListenLoop);
         }
 
-        private async void ListenLoop()
+        private static async void ListenLoop()
         {
             UniLog.Log("Started Babble loop");
-            while (OscSocketState)
+            while (_oscSocketState)
             {
                 var result = await _receiver.ReceiveAsync();
-                OscMessage message = OscMessage.Read(result.Buffer, 0, result.Buffer.Length);
+                var message = OscMessage.Read(result.Buffer, 0, result.Buffer.Length);
                 if (!MouthShapesWithAddress.ContainsKey(message.Address))
                 {
                     continue;
                 }
+
                 if (float.TryParse(message[0].ToString(), out float candidate))
                 {
                     MouthShapesWithAddress[message.Address] = candidate;
@@ -57,9 +57,11 @@ namespace ProjectBabbleNeos
 
         public void Teardown()
         {
-            OscSocketState = false;
+            UniLog.Log("Babble teardown called");
+            _oscSocketState = false;
             _receiver.Close();
             _task.Wait();
+            UniLog.Log("Babble teardown completed");
         }
     }
 }

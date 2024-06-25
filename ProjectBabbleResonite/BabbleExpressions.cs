@@ -1,9 +1,15 @@
-﻿namespace ProjectBabbleNeos
+﻿namespace ProjectBabbleResonite
 {
     public static class BabbleExpressions
     {
-        public static readonly string[] MouthShapesWithAddress = new string[]
-        {
+        public static readonly string[] MouthShapesWithAddress = {
+
+            "/tongueOut",
+            "/tongueUp",
+            "/tongueDown",
+            "/tongueLeft",
+            "/tongueRight",
+            "/tongueRoll",
             "/cheekPuffLeft",
             "/cheekPuffRight",
             "/cheekSuckLeft",
@@ -12,23 +18,11 @@
             "/jawForward",
             "/jawLeft",
             "/jawRight",
-            "/noseSneerLeft",
-            "/noseSneerRight",
             "/mouthFunnel",
-            "/mouthFunnel",
-            "/mouthFunnel",
-            "/mouthFunnel",
-            "/mouthPucker",
-            "/mouthPucker",
-            "/mouthPucker",
             "/mouthPucker",
             "/mouthLeft",
-            "/mouthLeft",
-            "/mouthRight",
             "/mouthRight",
             "/mouthRollUpper",
-            "/mouthRollUpper",
-            "/mouthRollLower",
             "/mouthRollLower",
             "/mouthShrugUpper",
             "/mouthShrugLower",
@@ -46,19 +40,7 @@
             "/mouthPressLeft",
             "/mouthPressRight",
             "/mouthStretchLeft",
-            "/mouthStretchRight",
-            "/tongueOut",
-            "/tongueUp",
-            "/tongueDown",
-            "/tongueLeft",
-            "/tongueRight",
-            "/tongueRoll",
-            "/tongueBendDown",
-            "/tongueCurlUp",
-            "/tongueSquish",
-            "/tongueFlat",
-            "/tongueTwistLeft",
-            "/tongueTwistRight"
+            "/mouthStretchRight"
         };
     }
 }
