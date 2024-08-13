@@ -11,7 +11,7 @@ public class BabbleResonite : ResoniteMod
 {
     public override string Name => "ProjectBabbleResonite";
     public override string Author => "PLYSHKA + dfgHiatus";
-    public override string Version => "2.2.0";
+    public override string Version => "2.3.0";
 
     public override string Link => "https://github.com/Meister1593/ProjectBabbleResonite";
 
