@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Elements.Core;
 using FrooxEngine;
-using HarmonyLib;
 using ResoniteModLoader;
 
 namespace ProjectBabbleResonite;
@@ -11,9 +10,9 @@ public class BabbleResonite : ResoniteMod
 {
     public override string Name => "ProjectBabbleResonite";
     public override string Author => "PLYSHKA + dfgHiatus";
-    public override string Version => "2.3.0";
+    public override string Version => "2.4.0";
 
-    public override string Link => "https://github.com/Meister1593/ProjectBabbleResonite";
+    public override string Link => "https://github.com/dfgHiatus/ProjectBabbleResonite";
 
     private static BabbleOsc _babbleOsc;
     private static ModConfiguration _config;
@@ -22,7 +21,22 @@ public class BabbleResonite : ResoniteMod
     {
         _config = GetConfiguration();
         Engine.Current.OnShutdown += () => _babbleOsc.Teardown();
-        new Harmony("net.plyshka.ProjectBabbleResonite").PatchAll();
+
+        Engine.Current.RunPostInit(() =>
+        {
+            try
+            {
+                _babbleOsc = new BabbleOsc(_config.GetValue(OscPort));
+                var gen = new ProjectBabbleInterface();
+                Engine.Current.InputInterface.RegisterInputDriver(gen);
+            }
+            catch (Exception e)
+            {
+                Warn("Module failed to initialize.");
+                Warn(e.ToString());
+            }
+
+        });
     }
 
     [AutoRegisterConfigKey]
@@ -30,26 +44,6 @@ public class BabbleResonite : ResoniteMod
 
     [AutoRegisterConfigKey]
     private static readonly ModConfigurationKey<int> OscPort = new("osc_port", "Babble OSC port", () => 8888);
-
-    [HarmonyPatch(typeof(InputInterface), MethodType.Constructor)]
-    [HarmonyPatch(new[] { typeof(Engine) })]
-    public class InputInterfaceCtorPatch
-    {
-        public static void Postfix(InputInterface __instance)
-        {
-            try
-            {
-                _babbleOsc = new BabbleOsc(_config.GetValue(OscPort));
-                var gen = new ProjectBabbleInterface();
-                __instance.RegisterInputDriver(gen);
-            }
-            catch (Exception e)
-            {
-                Warn("Module failed to initialize.");
-                Warn(e.ToString());
-            }
-        }
-    }
 
     private class ProjectBabbleInterface : IInputDriver
     {
