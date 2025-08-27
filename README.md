@@ -1,3 +1,7 @@
+# Resonite now has native Project Babble support! No need to use this mod anymore :)
+
+---
+
 # ProjectBabbleResonite
 
 A [ResoniteModLoader](https://github.com/resonite-modding-group/ResoniteModLoader) mod for [Resonite](https://resonite.com/) that enables the use of [Babble Face Tracking](https://github.com/SummerSigh/ProjectBabble).
